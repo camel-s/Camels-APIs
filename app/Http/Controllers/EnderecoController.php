@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Endereco;
 use Illuminate\Http\Request;
 
-class LoginsController extends Controller
+class EnderecoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,8 @@ class LoginsController extends Controller
      */
     public function index()
     {
-        //
+        $endereco = Endereco::all();
+        return response()->json($endereco);
     }
 
     /**
@@ -34,7 +36,10 @@ class LoginsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $endereco = new Endereco();
+        $endereco->fill($request->all());
+        $endereco->save();
+        return response()->json($endereco, 201);
     }
 
     /**
@@ -68,7 +73,18 @@ class LoginsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $endereco = Endereco::find($id);
+
+        if(!$endereco) {
+            return response()->json([
+                'message'   => 'Informação não encontrada',
+            ], 404);
+        }
+
+        $endereco->fill($request->all());
+        $endereco->save();
+
+        return response()->json($endereco);
     }
 
     /**
@@ -79,6 +95,17 @@ class LoginsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $endereco = Endereco::find($id);
+        if(!$endereco){
+            return response()->json([
+                'message'   => 'Informação não encontrada',
+            ], 404);    
+        }
+
+        $endereco->delete();
+
+            return response()->json([
+                'message' => 'Sucesso ao excluir a informação',
+            ], 201);
     }
 }
