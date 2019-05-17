@@ -1,11 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Endereco;
-
 class EnderecosController extends Controller
 {
     /**
@@ -18,7 +14,6 @@ class EnderecosController extends Controller
         $enderecos = Endereco::all();
         return response()->json($enderecos);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +23,6 @@ class EnderecosController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,9 +31,11 @@ class EnderecosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $endereco = new Endereco();
+        $endereco->fill($request->all());
+        $endereco->save();
+        return response()->json($endereco, 201);
     }
-
     /**
      * Display the specified resource.
      *
@@ -50,7 +46,6 @@ class EnderecosController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -61,7 +56,6 @@ class EnderecosController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -71,9 +65,16 @@ class EnderecosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $endereco = Endereco::find($id);
+        if(!$endereco) {
+            return response()->json([
+                'message'   => 'Informação não encontrada',
+            ], 404);
+        }
+        $endereco->fill($request->all());
+        $endereco->save();
+        return response()->json($endereco);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -82,6 +83,15 @@ class EnderecosController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $endereco = Endereco::find($id);
+        if(!$endereco){
+            return response()->json([
+                'message'   => 'Informação não encontrada',
+            ], 404);    
+        }
+        $endereco->delete();
+            return response()->json([
+                'message' => 'Sucesso ao excluir a informação',
+            ], 201);
+        }
 }

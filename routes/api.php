@@ -1,27 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Endereco;
+use App\Http\Resources\EnderecoResource;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::resource('/enderecos', 'EnderecosController');
 
-
-Route::group(array('prefix' => 'api'), function()
-{
-
-  Route::get('/', function () {
-      return response()->json(['message' => 'Camels API', 'status' => 'Connected']);;
-  });
-
-  Route::resource('enderecos', 'EnderecosController');
-  Route::resource('logins', 'LoginsController');
-  Route::resource('usuario', 'UsuariosController');
-
-});
-
-Route::get('/', function () {
-    return redirect('api');
-});
 
 ?>
