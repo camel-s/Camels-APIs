@@ -54,7 +54,13 @@ class EnderecosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $endereco = Endereco::find($id);
+        if(!$endereco){
+            return response()->json([
+                'message'   => 'Informação não encontrada',
+            ], 404); 
+        }
+        return response()->json($endereco);
     }
     /**
      * Update the specified resource in storage.
