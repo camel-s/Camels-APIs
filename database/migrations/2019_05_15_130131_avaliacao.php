@@ -19,11 +19,11 @@ class Avaliacao extends Migration
             $table->date('tipo');
             $table->string('comentario');
 
-            $table->unsignedBigInteger('usuario_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
             $table->unsignedBigInteger('oferta_id')->unsigned();
            
-            $table->foreign('usuario_id')
-            ->references('id')->on('usuarios')
+            $table->foreign('user_id')
+            ->references('id')->on('users')
             ->onDelete('cascade');
             
             $table->foreign('oferta_id')

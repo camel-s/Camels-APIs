@@ -16,10 +16,10 @@ class Oferente extends Migration
         Schema::create('oferentes', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->unsignedBigInteger('usuario_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
             
-            $table->foreign('usuario_id')
-            ->references('id')->on('usuarios')
+            $table->foreign('user_id')
+            ->references('id')->on('users')
             ->onDelete('cascade');
             
             $table->timestamps();
